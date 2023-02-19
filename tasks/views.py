@@ -6,6 +6,7 @@ from django.views.generic import ListView, DetailView, CreateView, UpdateView, D
 
 from .forms import TaskForm
 from .models import Task
+from .permissions import MustBeAuthorMixin
 
 
 class TaskListView(ListView):
@@ -23,15 +24,22 @@ class TaskCreateView(LoginRequiredMixin, CreateView):
     login_url = reverse_lazy('tasks:signin')
     success_url = reverse_lazy('tasks:task_list')
 
+    def get_form_kwargs(self):
+        kwargs = super(TaskCreateView, self).get_form_kwargs()
+        if kwargs['instance'] is None:
+            kwargs['instance'] = Task()
+        kwargs['instance'].creator = self.request.user
+        return kwargs
 
-class TaskUpdateView(LoginRequiredMixin, UpdateView):
+
+class TaskUpdateView(LoginRequiredMixin, MustBeAuthorMixin, UpdateView):
     model = Task
     form_class = TaskForm
     login_url = reverse_lazy('tasks:signin')
     success_url = reverse_lazy('tasks:task_list')
 
 
-class TaskDeleteView(LoginRequiredMixin, DeleteView):
+class TaskDeleteView(LoginRequiredMixin, MustBeAuthorMixin, DeleteView):
     model = Task
     login_url = reverse_lazy('tasks:signin')
     success_url = reverse_lazy('tasks:task_list')
