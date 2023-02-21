@@ -41,10 +41,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'tasks',
-    'authentication',
     'crispy_forms',
     'crispy_bootstrap5',
+    'rest_framework',
+    'tasks',
+    'authentication',
 ]
 
 MIDDLEWARE = [
@@ -108,6 +109,15 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+    'DEFAULT_FILTER_BACKENDS': (
+        'django_filters.rest_framework.DjangoFilterBackend',
+    ),
+}
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/

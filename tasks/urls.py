@@ -17,4 +17,7 @@ urlpatterns = [
     re_path(r'^(?P<pk>\d+)/update/$', views.TaskUpdateView.as_view(), name='task_update'),
     # Delete a task
     re_path(r'^(?P<pk>\d+)/delete/$', views.TaskDeleteView.as_view(), name='task_delete'),
+
+    path('api/v1/', views.TaskListAPIView.as_view(), name='task_list_api'),
+    path('api/v1/<int:pk>/', views.RetrieveUpdateDestroyTaskView.as_view(), name='task_modify_api'),
 ]
