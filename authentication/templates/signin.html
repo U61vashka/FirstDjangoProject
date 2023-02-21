@@ -13,5 +13,5 @@ Login
     {{ form|crispy }}
     <button type="submit" class="btn btn-primary">Sign up</button>
 </form>
-<a href='{%url 'tasks:signup' %}?next={{ next }}'>Don`t have account yet? Sign up</a>
+<a href='{%url 'authentication:signup' %}?next={{ next }}'>Don`t have account yet? Sign up</a>
 {% endblock %}
