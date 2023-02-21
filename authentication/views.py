@@ -2,6 +2,11 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.views import LoginView, LogoutView
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
+from rest_framework import generics
+from rest_framework.permissions import AllowAny
+from rest_framework_simplejwt.state import User
+
+from authentication.serializers import RegisterSerializer
 
 
 class SimpleLoginView(LoginView):
@@ -22,4 +27,10 @@ class SimpleSignupView(CreateView):
 
 
 class SimpleLogoutView(LogoutView):
-    template_name = '/logged_out.html'
+    template_name = 'logged_out.html'
+
+
+class RegisterAPIView(generics.CreateAPIView):
+    queryset = User.objects.all()
+    permission_classes = (AllowAny,)
+    serializer_class = RegisterSerializer
